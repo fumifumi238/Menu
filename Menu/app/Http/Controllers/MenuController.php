@@ -16,6 +16,10 @@ class MenuController extends Controller
 		return view("menu.create_form");
 	}
 
+  function vue(){
+    return view("menu.vue");
+  }
+
 	function create(Request $request){
 
 	  $input = $request->only('name', 'image', 'price');
@@ -149,7 +153,7 @@ if($request->has('send')){
    if($is_change_image){
      $menu->save();
    }
-   
+
 if($menu->draft == 1){
   return redirect("menu/index")->withStatus("下書きを保存しました");
 }

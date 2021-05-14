@@ -34,6 +34,7 @@ Route::get('/menu/draft', 'MenuController@draft');
 });
 
 Route::get('/menu/index', 'MenuController@index');
+Route::get('/menu/vue', 'MenuController@vue');
 
 Route::get('/menu/{id}','MenuController@show');
 

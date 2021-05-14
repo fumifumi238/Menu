@@ -16,7 +16,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container" id="app">
 	<div class="card">
 		<div class="card-header">記事の編集</div>
 		<div class="card-body">
@@ -39,10 +39,13 @@
 			</div>
       		<div class="form-group">
 				<label>画像: </label><br />
-				@if($menu->image)
-				<img src="{{ Storage::url($menu->image)  }}" style="width: 150px;"/><br />
-				@endif
-				<input type="file" class="form-control" name="image">
+				<div v-if="url">
+              <img :src="url"  width="300" height="200">
+			    </div>
+                <div v-else>
+				<img src="{{ Storage::url($menu->image)  }}"  width="300" height="200"/><br />
+				</div>
+				<input type="file" ref="preview" @change="uploadFile"  class="form-control" name="image">
         <div class="form-group">
           <label>値段: </label><br />
           <input class="form-control" type="text" name="price" value="{{old('price', $menu->price)}}" />
@@ -65,5 +68,22 @@
 
 		</div>
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+	<script>
+     new Vue({
+        el: "#app",
+        data() {
+  return {
+    url:""
+  }
+},
+methods:{
+  uploadFile(){
+      const file = this.$refs.preview.files[0];
+      this.url = URL.createObjectURL(file)
+  }
+}
+      })
+    </script>
 </div>
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="app">
 	<div class="card">
 		<div class="card-header">記事の作成</div>
 		<div class="card-body">
@@ -24,8 +24,11 @@
 
 			<div class="form-group">
 				<label>画像: </label><br />
-				<!-- アップロードした画像を保存したい -->
-					<input type="file" name="image" accept="image/png, image/jpeg" value="{{old('image')}}"/>
+				<div v-if="url">
+              <img :src="url"  width="300" height="200">
+             </div>
+					<input type="file"  ref="preview" @change="uploadFile" 
+					name="image" accept="image/png, image/jpeg" value="{{old('image')}}"/>
 			</div>
 			<br />
 
@@ -44,5 +47,22 @@
 			</a>
 		</div>
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+	<script>
+     new Vue({
+        el: "#app",
+        data() {
+  return {
+    url:""
+  }
+},
+methods:{
+  uploadFile(){
+      const file = this.$refs.preview.files[0];
+      this.url = URL.createObjectURL(file)
+  }
+}
+      })
+    </script>
 </div>
 @endsection
